@@ -1,6 +1,7 @@
 import FeedbackSection from '../components/Feedback'
 import Footer from '../components/Footer'
 import axios from 'axios'
+import API_BASE_URL from '../config'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
@@ -39,7 +40,7 @@ const IceCream = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/menu/icecream')
+        const res = await axios.get(`${API_BASE_URL}/menu/icecream`)
         setDbMenuItems(res.data)
       } catch (err) {
         console.error(err)

@@ -1,15 +1,17 @@
+import axios from 'axios'
+import API_BASE_URL from '../config'
 import FeedbackSection from '../components/Feedback'
 import Footer from '../components/Footer'
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 const Coffee = () => {
-  const navigate = useNavigate()
   const mountainRef = useRef(null)
   const cupRef = useRef(null)
   const [inViewMenu, setInViewMenu] = useState(false)
   const menuRef = useRef(null)
+  const [dbMenuItems, setDbMenuItems] = useState([])
+  const [dbLoading, setDbLoading] = useState(true)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -35,13 +37,18 @@ const Coffee = () => {
     return () => observer.disconnect()
   }, [])
 
-  const flagColors = [
-    '#3B82F6', '#FFFFFF', '#EF4444',
-    '#22C55E', '#EAB308', '#3B82F6',
-    '#FFFFFF', '#EF4444', '#22C55E',
-    '#EAB308', '#3B82F6', '#FFFFFF',
-    '#EF4444', '#22C55E', '#EAB308',
-  ]
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/menu/coffee`)
+        setDbMenuItems(res.data)
+      } catch (err) {
+        console.error(err)
+      }
+      setDbLoading(false)
+    }
+    fetchMenu()
+  }, [])
 
   const menuItems = [
     {
@@ -126,7 +133,7 @@ const Coffee = () => {
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        {/* Mountains — dark mood */}
+        {/* Mountains */}
         <div
           ref={mountainRef}
           style={{
@@ -147,22 +154,18 @@ const Coffee = () => {
             }}
             preserveAspectRatio="none"
           >
-            {/* Far mountains */}
             <polygon
               points="0,600 200,200 350,350 500,150 650,300 800,100 950,280 1100,180 1250,320 1440,200 1440,600"
               fill="rgba(40,55,35,0.9)"
             />
-            {/* Snow caps — gold tinted at night */}
             <polygon points="500,150 472,225 528,225" fill="rgba(255,240,200,0.9)" />
             <polygon points="800,100 770,188 830,188" fill="rgba(255,245,210,0.95)" />
             <polygon points="1100,180 1074,258 1126,258" fill="rgba(255,240,200,0.85)" />
             <polygon points="200,200 180,262 220,262" fill="rgba(255,235,195,0.8)" />
-            {/* Mid mountains */}
             <polygon
               points="0,600 150,350 300,450 500,280 700,400 900,260 1100,380 1300,300 1440,380 1440,600"
               fill="rgba(25,35,20,0.95)"
             />
-            {/* Front hills */}
             <polygon
               points="0,600 200,480 400,520 600,460 800,510 1000,450 1200,490 1440,460 1440,600"
               fill="rgba(15,20,10,0.98)"
@@ -208,37 +211,22 @@ const Coffee = () => {
                   <stop offset="100%" stopColor="rgba(200,140,60,0.2)" />
                 </radialGradient>
               </defs>
-
-              {/* Saucer */}
               <ellipse cx="150" cy="285" rx="110" ry="26" fill="url(#saucer)" />
               <ellipse cx="150" cy="280" rx="85" ry="16" fill="rgba(255,255,255,0.12)" />
-
-              {/* Cup body */}
               <path d="M 60 140 L 75 275 Q 150 295 225 275 L 240 140 Z" fill="url(#cupBody)" />
-
-              {/* Cup highlight */}
               <path d="M 65 145 L 78 268 Q 100 282 110 268 L 98 145 Z" fill="rgba(255,255,255,0.06)" />
-
-              {/* Handle */}
               <path d="M 240 170 Q 295 170 295 210 Q 295 250 240 250"
                 stroke="#C9973A" strokeWidth="14" fill="none" strokeLinecap="round" />
               <path d="M 240 170 Q 282 170 282 210 Q 282 250 240 250"
                 stroke="#5C3317" strokeWidth="9" fill="none" strokeLinecap="round" />
-
-              {/* Coffee surface */}
               <ellipse cx="150" cy="143" rx="80" ry="20" fill="url(#coffeeTop)" />
-
-              {/* Latte art */}
               <ellipse cx="150" cy="143" rx="80" ry="20" fill="url(#latteArt)" />
-              {/* Heart latte art */}
               <path
                 d="M 150 158 C 150 158 128 148 128 136 C 128 129 136 125 150 133 C 164 125 172 129 172 136 C 172 148 150 158 150 158 Z"
                 fill="rgba(255,210,140,0.45)"
               />
               <ellipse cx="150" cy="140" rx="80" ry="20" fill="none"
                 stroke="rgba(201,151,58,0.3)" strokeWidth="2" />
-
-              {/* Steam */}
               {[0, 1, 2].map((i) => (
                 <motion.path
                   key={i}
@@ -285,11 +273,7 @@ const Coffee = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <span style={{
-              display: 'inline-block',
-              width: '2rem', height: '1px',
-              background: '#C9973A',
-            }} />
+            <span style={{ display: 'inline-block', width: '2rem', height: '1px', background: '#C9973A' }} />
             Cream & Brew · Coffee
           </motion.p>
 
@@ -376,44 +360,41 @@ const Coffee = () => {
           </motion.div>
         </div>
 
-        {/* Book a Table — top right */}
+        {/* Book a Table */}
         <motion.a
           href="/reservation"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          whileHover={{ scale: 1.15, y: -8, boxShadow: '0 20px 50px rgba(201,151,58,0.5)' }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05, y: -2 }}
+          whileTap={{ scale: 0.97 }}
           style={{
             position: 'absolute',
             top: '1.5rem',
             right: '2rem',
             zIndex: 10,
-            background: 'linear-gradient(135deg, #C9973A, #E8B85A)',
-            color: 'white',
-            fontWeight: 700,
-            padding: '0.9rem 2rem',
-            border: '2px solid rgba(255,255,255,0.2)',
+            background: 'rgba(255,255,255,0.08)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(201,151,58,0.4)',
             borderRadius: '100px',
+            padding: '0.65rem 1.4rem',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.85rem',
+            fontSize: '0.78rem',
+            fontWeight: 500,
+            color: 'white',
             textDecoration: 'none',
-            letterSpacing: '0.08em',
-            boxShadow: '0 8px 25px rgba(201,151,58,0.35)',
+            letterSpacing: '0.05em',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.7rem',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
+            gap: '0.5rem',
           }}
         >
           <span style={{
-            width: '10px',
-            height: '10px',
+            width: '6px', height: '6px',
             borderRadius: '50%',
-            background: 'white',
+            background: '#C9973A',
             display: 'inline-block',
-            boxShadow: '0 0 10px rgba(255,255,255,0.6)',
           }} />
           Book a Table
         </motion.a>
@@ -508,14 +489,47 @@ const Coffee = () => {
             </p>
           </motion.div>
 
+          {/* Menu Cards */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
             gap: '2rem',
           }}>
-            {menuItems.map((item, i) => (
-              <CoffeeCard key={i} item={item} index={i} inView={inViewMenu} />
-            ))}
+            {dbLoading ? (
+              <div style={{
+                gridColumn: '1 / -1',
+                textAlign: 'center',
+                padding: '3rem',
+                color: 'rgba(255,255,255,0.2)',
+                fontFamily: "'Playfair Display', serif",
+                fontStyle: 'italic',
+              }}>
+                Loading menu...
+              </div>
+            ) : dbMenuItems.length > 0 ? (
+              dbMenuItems.map((item, i) => (
+                <CoffeeCard
+                  key={item._id}
+                  item={{
+                    name: item.name,
+                    tag: item.tag || 'Special',
+                    desc: item.description,
+                    flavours: [],
+                    emoji: item.emoji || '☕',
+                    color: '#C9973A',
+                    bg: 'linear-gradient(135deg, #1A0F07, #2C1A0E)',
+                    light: false,
+                    price: item.price,
+                  }}
+                  index={i}
+                  inView={inViewMenu}
+                />
+              ))
+            ) : (
+              menuItems.map((item, i) => (
+                <CoffeeCard key={i} item={item} index={i} inView={inViewMenu} />
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -650,15 +664,11 @@ const Coffee = () => {
       </div>
 
       <FeedbackSection theme="dark" />
-
-      {/* ===== FOOTER ===== */}
       <Footer theme="dark" />
 
     </div>
   )
 }
-  
-
 
 // ===== COFFEE MENU CARD =====
 const CoffeeCard = ({ item, index, inView }) => {
@@ -686,7 +696,6 @@ const CoffeeCard = ({ item, index, inView }) => {
         transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       }}
     >
-      {/* Steam on hover */}
       {hovered && (
         <motion.div
           style={{
@@ -713,7 +722,6 @@ const CoffeeCard = ({ item, index, inView }) => {
         </motion.div>
       )}
 
-      {/* Tag */}
       <div style={{
         display: 'inline-block',
         padding: '0.3rem 0.9rem',
@@ -731,7 +739,6 @@ const CoffeeCard = ({ item, index, inView }) => {
         {item.tag}
       </div>
 
-      {/* Emoji */}
       <div style={{
         fontSize: '3rem',
         marginBottom: '1rem',
@@ -742,7 +749,6 @@ const CoffeeCard = ({ item, index, inView }) => {
         {item.emoji}
       </div>
 
-      {/* Name */}
       <h3 style={{
         fontFamily: "'Playfair Display', serif",
         fontSize: '1.5rem',
@@ -754,7 +760,6 @@ const CoffeeCard = ({ item, index, inView }) => {
         {item.name}
       </h3>
 
-      {/* Description */}
       <p style={{
         fontFamily: "'Playfair Display', serif",
         fontStyle: 'italic',
@@ -766,9 +771,13 @@ const CoffeeCard = ({ item, index, inView }) => {
         {item.desc}
       </p>
 
-      {/* Flavours */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-        {item.flavours.map((f, j) => (
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '0.5rem',
+        marginBottom: item.price ? '1rem' : '0',
+      }}>
+        {item.flavours && item.flavours.map((f, j) => (
           <span key={j} style={{
             padding: '0.25rem 0.75rem',
             borderRadius: '100px',
@@ -782,7 +791,18 @@ const CoffeeCard = ({ item, index, inView }) => {
         ))}
       </div>
 
-      {/* Gold glow on hover */}
+      {item.price && (
+        <p style={{
+          fontFamily: "'Playfair Display', serif",
+          fontWeight: 700,
+          fontSize: '1.1rem',
+          color: item.color,
+          marginTop: '0.5rem',
+        }}>
+          {item.price}
+        </p>
+      )}
+
       {hovered && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -848,11 +868,9 @@ const CoffeeExperienceCard = ({ card, index }) => {
       }}>
         {card.num}
       </span>
-
       <span style={{ fontSize: '2rem', display: 'block', marginBottom: '1rem' }}>
         {card.emoji}
       </span>
-
       <h3 style={{
         fontFamily: "'Playfair Display', serif",
         fontSize: '1.2rem',
@@ -862,7 +880,6 @@ const CoffeeExperienceCard = ({ card, index }) => {
       }}>
         {card.title}
       </h3>
-
       <p style={{
         fontFamily: "'Playfair Display', serif",
         fontStyle: 'italic',
@@ -872,7 +889,6 @@ const CoffeeExperienceCard = ({ card, index }) => {
       }}>
         {card.desc}
       </p>
-
       <div style={{
         position: 'absolute',
         left: 0, top: '20%', bottom: '20%',
@@ -950,7 +966,6 @@ const CoffeePolaroid = ({ photo, index }) => {
           {photo.emoji}
         </motion.span>
       </div>
-
       <p style={{
         fontFamily: "'Playfair Display', serif",
         fontStyle: 'italic',
@@ -960,8 +975,6 @@ const CoffeePolaroid = ({ photo, index }) => {
       }}>
         {photo.label}
       </p>
-
-      {/* Gold pin */}
       <div style={{
         position: 'absolute',
         top: '-8px',

@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config'
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -33,7 +34,7 @@ const Reservation = () => {
     setErrors({})
     setLoading(true)
     try {
-      await axios.post('http://localhost:5000/api/reservations', form)
+      await axios.post(`${API_BASE_URL}/reservations`, form)
       setLoading(false)
       setSubmitted(true)
     } catch (err) {

@@ -1,8 +1,9 @@
+import API_BASE_URL from '../config'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import axios from 'axios'
 
-const API = 'http://localhost:5000/api'
+const API = API_BASE_URL
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState('icecream')

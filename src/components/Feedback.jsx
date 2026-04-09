@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import axios from 'axios'
@@ -27,7 +28,7 @@ const FeedbackSection = ({ theme = 'light' }) => {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/feedback')
+      const res = await axios.get(`${API_BASE_URL}/feedback`)
       setReviews(res.data)
     } catch (err) {
       console.error(err)
@@ -38,7 +39,7 @@ const FeedbackSection = ({ theme = 'light' }) => {
     if (!form.name || !form.message || !form.rating) return
     setLoading(true)
     try {
-      await axios.post('http://localhost:5000/api/feedback', form)
+      await axios.post(`${API_BASE_URL}/feedback`, form)
       setSubmitted(true)
       fetchFeedback()
       setTimeout(() => {
