@@ -1,7 +1,7 @@
-import FeedbackSection from '../components/Feedback'
-import Footer from '../components/Footer'
 import axios from 'axios'
 import API_BASE_URL from '../config'
+import FeedbackSection from '../components/Feedback'
+import Footer from '../components/Footer'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
@@ -59,6 +59,7 @@ const IceCream = () => {
       emoji: '🎨',
       color: '#FF85A1',
       bg: 'linear-gradient(135deg, #FFF0F5, #FFE4EE)',
+      textColor: '#C4365A',
     },
     {
       name: 'Italian Gelato',
@@ -68,6 +69,7 @@ const IceCream = () => {
       emoji: '🇮🇹',
       color: '#C9973A',
       bg: 'linear-gradient(135deg, #FFFBEA, #FFF3C8)',
+      textColor: '#8B6400',
     },
     {
       name: 'Pop Ice Cream',
@@ -77,6 +79,7 @@ const IceCream = () => {
       emoji: '🍭',
       color: '#7EDBB0',
       bg: 'linear-gradient(135deg, #F0FFF8, #E0FFF4)',
+      textColor: '#1A7A50',
     },
     {
       name: 'Soft Serve',
@@ -84,8 +87,9 @@ const IceCream = () => {
       desc: 'Pillowy clouds of soft serve in rotating seasonal flavours, topped with housemade sauces and crumbles.',
       flavours: ['Vanilla Mist', 'Strawberry Sky', 'Matcha Dew'],
       emoji: '🍦',
-      color: '#FF85A1',
-      bg: 'linear-gradient(135deg, #FFF0F5, #F8F0FF)',
+      color: '#BF8FFF',
+      bg: 'linear-gradient(135deg, #F5F0FF, #EBE0FF)',
+      textColor: '#6B3FA0',
     },
   ]
 
@@ -93,7 +97,7 @@ const IceCream = () => {
     <div style={{
       width: '100vw',
       minHeight: '100vh',
-      background: 'linear-gradient(160deg, #FFF0F5 0%, #FFF8FC 50%, #F0FFF8 100%)',
+      background: '#FFF8FC',
       overflowX: 'hidden',
     }}>
 
@@ -101,69 +105,68 @@ const IceCream = () => {
       <div style={{
         position: 'relative',
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
 
-        {/* Sky background */}
+        {/* Colourful background */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(180deg, #FFE4EE 0%, #FFD6E6 20%, #C8E6F5 45%, #D4E8D0 65%, #EEF5E8 80%, #FFF0F5 100%)',
+          background: 'linear-gradient(160deg, #FFF0F5 0%, #FFF5E0 30%, #F0FFF8 60%, #F5F0FF 100%)',
         }} />
 
-        {/* Mountains */}
-        <div
-          ref={mountainRef}
+        {/* Decorative colour blobs */}
+        <motion.div animate={{ scale: [1, 1.1, 1], x: [0, 10, 0] }}
+          transition={{ duration: 8, repeat: Infinity }}
           style={{
-            position: 'absolute',
-            inset: 0,
-            transition: 'transform 0.1s ease-out',
-            pointerEvents: 'none',
-          }}
-        >
-          <svg
-            viewBox="0 0 1440 600"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{
-              position: 'absolute',
-              bottom: '20%',
-              width: '120%',
-              left: '-10%',
-            }}
+            position: 'absolute', width: 500, height: 500, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,133,161,0.2), transparent 70%)',
+            top: '-100px', left: '-100px', pointerEvents: 'none',
+          }} />
+        <motion.div animate={{ scale: [1.1, 1, 1.1], x: [0, -10, 0] }}
+          transition={{ duration: 7, repeat: Infinity }}
+          style={{
+            position: 'absolute', width: 400, height: 400, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(126,219,176,0.2), transparent 70%)',
+            bottom: '0', right: '0', pointerEvents: 'none',
+          }} />
+        <motion.div animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 6, repeat: Infinity }}
+          style={{
+            position: 'absolute', width: 300, height: 300, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(191,143,255,0.15), transparent 70%)',
+            top: '30%', right: '20%', pointerEvents: 'none',
+          }} />
+
+        {/* Mountains */}
+        <div ref={mountainRef} style={{
+          position: 'absolute', inset: 0,
+          transition: 'transform 0.1s ease-out',
+          pointerEvents: 'none',
+        }}>
+          <svg viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg"
+            style={{ position: 'absolute', bottom: '15%', width: '120%', left: '-10%' }}
             preserveAspectRatio="none"
           >
-            <polygon
-              points="0,600 200,200 350,350 500,150 650,300 800,100 950,280 1100,180 1250,320 1440,200 1440,600"
-              fill="rgba(220,235,248,0.9)"
-            />
-            <polygon points="500,150 472,225 528,225" fill="white" opacity="0.95" />
-            <polygon points="800,100 770,188 830,188" fill="white" opacity="0.95" />
-            <polygon points="1100,180 1074,258 1126,258" fill="white" opacity="0.9" />
-            <polygon points="200,200 180,262 220,262" fill="white" opacity="0.85" />
-            <polygon
-              points="0,600 150,350 300,450 500,280 700,400 900,260 1100,380 1300,300 1440,380 1440,600"
-              fill="rgba(200,220,195,0.8)"
-            />
-            <polygon
-              points="0,600 200,480 400,520 600,460 800,510 1000,450 1200,490 1440,460 1440,600"
-              fill="rgba(180,210,175,0.6)"
-            />
+            <polygon points="0,600 200,200 350,350 500,150 650,300 800,100 950,280 1100,180 1250,320 1440,200 1440,600"
+              fill="rgba(220,235,248,0.6)" />
+            <polygon points="500,150 472,225 528,225" fill="white" opacity="0.9" />
+            <polygon points="800,100 770,188 830,188" fill="white" opacity="0.9" />
+            <polygon points="1100,180 1074,258 1126,258" fill="white" opacity="0.85" />
+            <polygon points="0,600 150,350 300,450 500,280 700,400 900,260 1100,380 1300,300 1440,380 1440,600"
+              fill="rgba(200,235,210,0.5)" />
           </svg>
         </div>
 
         {/* Giant Soft Serve */}
-        <motion.div
-          ref={softserveRef}
+        <motion.div ref={softserveRef}
           style={{
-            position: 'absolute',
-            right: '8%',
-            bottom: '8%',
-            zIndex: 4,
-            transition: 'transform 0.15s ease-out',
+            position: 'absolute', right: '5%', bottom: '0',
+            zIndex: 4, transition: 'transform 0.15s ease-out',
           }}
           initial={{ opacity: 0, y: 80, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -173,7 +176,10 @@ const IceCream = () => {
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <svg width="280" height="420" viewBox="0 0 280 420" xmlns="http://www.w3.org/2000/svg">
+            <svg width="240" height="380" viewBox="0 0 280 420"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ maxWidth: '40vw' }}
+            >
               <defs>
                 <radialGradient id="swirl1" cx="40%" cy="30%" r="65%">
                   <stop offset="0%" stopColor="#FFF0F5" />
@@ -181,9 +187,9 @@ const IceCream = () => {
                   <stop offset="100%" stopColor="#FFB6C8" />
                 </radialGradient>
                 <radialGradient id="swirl2" cx="40%" cy="30%" r="65%">
-                  <stop offset="0%" stopColor="#E0FFF4" />
-                  <stop offset="50%" stopColor="#A8EDD4" />
-                  <stop offset="100%" stopColor="#7EDBB0" />
+                  <stop offset="0%" stopColor="#F5F0FF" />
+                  <stop offset="50%" stopColor="#D4BAFF" />
+                  <stop offset="100%" stopColor="#BF8FFF" />
                 </radialGradient>
                 <linearGradient id="coneG2" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor="#F0C080" />
@@ -215,23 +221,18 @@ const IceCream = () => {
 
         {/* Hero Text */}
         <div style={{
-          position: 'relative',
-          zIndex: 5,
-          maxWidth: '600px',
-          padding: '0 3rem',
-          marginRight: '20%',
+          position: 'relative', zIndex: 5,
+          maxWidth: '580px',
+          padding: '6rem 2rem 2rem 2rem',
+          marginRight: '15%',
         }}>
           <motion.p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.72rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#FF85A1',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.8rem',
+              fontSize: '0.72rem', letterSpacing: '0.3em',
+              textTransform: 'uppercase', color: '#FF85A1',
+              marginBottom: '1rem', display: 'flex',
+              alignItems: 'center', gap: '0.8rem',
             }}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -244,29 +245,27 @@ const IceCream = () => {
           <motion.h1
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(3rem, 6vw, 5.5rem)',
-              fontWeight: 900,
-              color: '#2C1A0E',
-              lineHeight: 1.05,
+              fontWeight: 900, lineHeight: 1.05,
               marginBottom: '1.5rem',
+              fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',
             }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.9 }}
           >
-            Ice Cream<br />
-            <em style={{ color: '#FF85A1', fontStyle: 'italic' }}>as an Art</em>
+            <span style={{ color: '#FF85A1' }}>Scoops</span>{' '}
+            <span style={{ color: '#2C1A0E' }}>that</span><br />
+            <span style={{ color: '#BF8FFF' }}>steal</span>{' '}
+            <span style={{ color: '#2C1A0E' }}>your</span>{' '}
+            <span style={{ color: '#7EDBB0' }}>heart</span>
           </motion.h1>
 
           <motion.p
             style={{
-              fontFamily: "'Playfair Display', serif",
-              fontStyle: 'italic',
-              fontSize: '1rem',
-              lineHeight: 1.8,
+              fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+              fontSize: '1rem', lineHeight: 1.8,
               color: 'rgba(44,26,14,0.55)',
-              marginBottom: '2.5rem',
-              maxWidth: '420px',
+              marginBottom: '1.5rem', maxWidth: '420px',
             }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -275,91 +274,99 @@ const IceCream = () => {
             Where every scoop is plated like a painting, every flavour tells a story, and every visit becomes a memory you carry home.
           </motion.p>
 
+          {/* Colourful flavour tags */}
+          <motion.div
+            style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+          >
+            {[
+              { label: 'Strawberry', color: '#FF85A1', bg: '#FFF0F5' },
+              { label: 'Pistachio', color: '#7EDBB0', bg: '#F0FFF8' },
+              { label: 'Mango', color: '#C9973A', bg: '#FFFBEA' },
+              { label: 'Lavender', color: '#BF8FFF', bg: '#F5F0FF' },
+              { label: 'Cardamom', color: '#E8B85A', bg: '#FFF8E8' },
+            ].map((tag) => (
+              <span key={tag.label} style={{
+                padding: '0.3rem 0.9rem',
+                borderRadius: '100px',
+                background: tag.bg,
+                color: tag.color,
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                border: `1px solid ${tag.color}30`,
+              }}>
+                {tag.label}
+              </span>
+            ))}
+          </motion.div>
+
           <motion.div
             style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
+            transition={{ delay: 1, duration: 0.8 }}
           >
-            <motion.a
-              href="#menu"
+            <motion.a href="#menu"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
               style={{
-                background: 'linear-gradient(135deg, #FF85A1, #FFB6C8)',
-                color: 'white',
-                padding: '0.9rem 2rem',
+                background: 'linear-gradient(135deg, #FF85A1, #BF8FFF)',
+                color: 'white', padding: '0.9rem 2rem',
                 borderRadius: '100px',
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.85rem',
-                fontWeight: 500,
+                fontSize: '0.85rem', fontWeight: 500,
                 cursor: 'pointer',
                 boxShadow: '0 8px 30px rgba(255,133,161,0.35)',
-                textDecoration: 'none',
-                display: 'inline-block',
+                textDecoration: 'none', display: 'inline-block',
               }}
             >
-              Explore Menu
+              Explore Menu 🍦
             </motion.a>
-            <motion.a
-              href="#experience"
+            <motion.a href="#experience"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
               style={{
-                background: 'transparent',
-                color: '#2C1A0E',
+                background: 'transparent', color: '#2C1A0E',
                 border: '1.5px solid rgba(44,26,14,0.2)',
-                padding: '0.9rem 2rem',
-                borderRadius: '100px',
+                padding: '0.9rem 2rem', borderRadius: '100px',
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.85rem',
-                fontWeight: 500,
-                cursor: 'pointer',
-                textDecoration: 'none',
+                fontSize: '0.85rem', fontWeight: 500,
+                cursor: 'pointer', textDecoration: 'none',
                 display: 'inline-block',
               }}
             >
-              Our Experience
+              Our Story
             </motion.a>
           </motion.div>
         </div>
 
         {/* Book a Table */}
-        <motion.a
-          href="/reservation"
+        <motion.a href="/reservation"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.97 }}
           style={{
-            position: 'absolute',
-            top: '1.5rem',
-            right: '2rem',
+            position: 'absolute', top: '1.5rem', right: '1.5rem',
             zIndex: 10,
-            background: 'rgba(255,255,255,0.15)',
+            background: 'rgba(255,255,255,0.7)',
             backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
             border: '1px solid rgba(255,133,161,0.4)',
-            borderRadius: '100px',
-            padding: '0.65rem 1.4rem',
+            borderRadius: '100px', padding: '0.65rem 1.4rem',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.78rem',
-            fontWeight: 500,
-            color: 'white',
-            textDecoration: 'none',
+            fontSize: '0.78rem', fontWeight: 500,
+            color: '#FF85A1', textDecoration: 'none',
             letterSpacing: '0.05em',
-            boxShadow: '0 4px 20px rgba(255,133,161,0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
           }}
         >
           <span style={{
-            width: '6px', height: '6px',
-            borderRadius: '50%',
-            background: '#FF85A1',
-            display: 'inline-block',
+            width: '6px', height: '6px', borderRadius: '50%',
+            background: '#FF85A1', display: 'inline-block',
           }} />
           Book a Table
         </motion.a>
@@ -367,31 +374,23 @@ const IceCream = () => {
         {/* Scroll indicator */}
         <motion.div
           style={{
-            position: 'absolute',
-            bottom: '2rem',
-            left: '50%',
+            position: 'absolute', bottom: '2rem', left: '50%',
             transform: 'translateX(-50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.5rem',
-            zIndex: 5,
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', gap: '0.5rem', zIndex: 5,
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
         >
           <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.6rem',
-            letterSpacing: '0.25em',
-            textTransform: 'uppercase',
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.6rem',
+            letterSpacing: '0.25em', textTransform: 'uppercase',
             color: 'rgba(44,26,14,0.35)',
           }}>Scroll</p>
           <motion.div
             style={{
-              width: '1px',
-              height: '40px',
+              width: '1px', height: '40px',
               background: 'linear-gradient(to bottom, rgba(255,133,161,0.6), transparent)',
             }}
             animate={{ scaleY: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
@@ -401,32 +400,23 @@ const IceCream = () => {
       </div>
 
       {/* ===== MENU SECTION ===== */}
-      <div
-        id="menu"
-        ref={menuRef}
-        style={{
-          padding: '8rem 4rem',
-          background: 'linear-gradient(180deg, #FFF0F5 0%, #FFFFFF 100%)',
-        }}
-      >
+      <div id="menu" ref={menuRef} style={{
+        padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 4vw, 4rem)',
+        background: 'linear-gradient(180deg, #FFF8FC 0%, #FFFFFF 100%)',
+      }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <motion.div
-            style={{ textAlign: 'center', marginBottom: '5rem' }}
+            style={{ textAlign: 'center', marginBottom: '4rem' }}
             initial={{ opacity: 0, y: 40 }}
             animate={inViewMenu ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
             <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.7rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#FF85A1',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.8rem',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem',
+              letterSpacing: '0.3em', textTransform: 'uppercase',
+              color: '#FF85A1', marginBottom: '1rem',
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'center', gap: '0.8rem',
             }}>
               <span style={{ width: '2rem', height: '1px', background: '#FF85A1', display: 'inline-block' }} />
               What We Serve
@@ -434,41 +424,32 @@ const IceCream = () => {
             </p>
             <h2 style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              fontWeight: 900,
-              color: '#2C1A0E',
-              lineHeight: 1.1,
+              fontSize: 'clamp(2rem, 5vw, 4rem)',
+              fontWeight: 900, lineHeight: 1.1,
             }}>
-              The Ice Cream <em style={{ color: '#FF85A1', fontStyle: 'italic' }}>Menu</em>
+              <span style={{ color: '#FF85A1' }}>The</span>{' '}
+              <span style={{ color: '#2C1A0E' }}>Ice Cream</span>{' '}
+              <em style={{ color: '#BF8FFF', fontStyle: 'italic' }}>Menu</em>
             </h2>
             <p style={{
-              fontFamily: "'Playfair Display', serif",
-              fontStyle: 'italic',
-              fontSize: '1rem',
-              color: 'rgba(44,26,14,0.45)',
-              marginTop: '1rem',
-              maxWidth: '500px',
-              margin: '1rem auto 0',
+              fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+              fontSize: '1rem', color: 'rgba(44,26,14,0.45)',
+              marginTop: '1rem', maxWidth: '500px', margin: '1rem auto 0',
             }}>
               Each creation is crafted fresh, plated with care, and served with love.
             </p>
           </motion.div>
 
-          {/* Menu Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))',
+            gap: '1.5rem',
           }}>
             {dbLoading ? (
               <div style={{
-                gridColumn: '1 / -1',
-                textAlign: 'center',
-                padding: '3rem',
-                color: 'rgba(44,26,14,0.3)',
-                fontFamily: "'Playfair Display', serif",
-                fontStyle: 'italic',
-                fontSize: '1rem',
+                gridColumn: '1 / -1', textAlign: 'center',
+                padding: '3rem', color: 'rgba(44,26,14,0.3)',
+                fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
               }}>
                 Loading menu...
               </div>
@@ -484,6 +465,7 @@ const IceCream = () => {
                     emoji: item.emoji || '🍦',
                     color: '#FF85A1',
                     bg: 'linear-gradient(135deg, #FFF0F5, #FFE4EE)',
+                    textColor: '#C4365A',
                     price: item.price,
                   }}
                   index={i}
@@ -500,26 +482,18 @@ const IceCream = () => {
       </div>
 
       {/* ===== EXPERIENCE SECTION ===== */}
-      <div
-        id="experience"
-        style={{
-          padding: '8rem 4rem',
-          background: 'linear-gradient(180deg, #FFFFFF 0%, #FFF0F5 100%)',
-        }}
-      >
+      <div id="experience" style={{
+        padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 4vw, 4rem)',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #FFF8FC 100%)',
+      }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.7rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#FF85A1',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.8rem',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem',
+              letterSpacing: '0.3em', textTransform: 'uppercase',
+              color: '#FF85A1', marginBottom: '1rem',
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'center', gap: '0.8rem',
             }}>
               <span style={{ width: '2rem', height: '1px', background: '#FF85A1', display: 'inline-block' }} />
               Why We Are Different
@@ -527,46 +501,25 @@ const IceCream = () => {
             </p>
             <h2 style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              fontWeight: 900,
-              color: '#2C1A0E',
-              lineHeight: 1.1,
+              fontSize: 'clamp(2rem, 5vw, 4rem)',
+              fontWeight: 900, lineHeight: 1.1,
             }}>
-              Not Just Ice Cream —<br />
-              <em style={{ color: '#FF85A1', fontStyle: 'italic' }}>An Experience</em>
+              <span style={{ color: '#2C1A0E' }}>Not Just Ice Cream —</span><br />
+              <em style={{ color: '#FF85A1', fontStyle: 'italic' }}>An</em>{' '}
+              <em style={{ color: '#BF8FFF', fontStyle: 'italic' }}>Experience</em>
             </h2>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))',
+            gap: '1.5rem',
           }}>
             {[
-              {
-                num: '01',
-                title: 'A Feast for the Eyes',
-                desc: 'Every dish is plated like a painting. Our colour plate concept transforms ice cream into edible art you will want to photograph before you eat.',
-                emoji: '🎨',
-              },
-              {
-                num: '02',
-                title: 'Mountain Soul',
-                desc: 'Himalayan prayer flags, snowy peaks, and locally sourced ingredients — Nepal is woven into every detail of your experience.',
-                emoji: '🏔️',
-              },
-              {
-                num: '03',
-                title: 'Made Fresh Daily',
-                desc: 'Small batch, handcrafted, no shortcuts. Every scoop is made fresh each morning because you deserve the real thing every time.',
-                emoji: '🫶',
-              },
-              {
-                num: '04',
-                title: 'Flavours of Nepal',
-                desc: 'Cardamom, saffron, tulsi, and local seasonal fruits. We take Nepali ingredients and turn them into world-class ice cream.',
-                emoji: '🌿',
-              },
+              { num: '01', title: 'A Feast for the Eyes', desc: 'Every dish is plated like a painting. Our colour plate concept transforms ice cream into edible art you will want to photograph before you eat.', emoji: '🎨', color: '#FF85A1' },
+              { num: '02', title: 'Mountain Soul', desc: 'Himalayan prayer flags, snowy peaks, and locally sourced ingredients — Nepal is woven into every detail of your experience.', emoji: '🏔️', color: '#7EDBB0' },
+              { num: '03', title: 'Made Fresh Daily', desc: 'Small batch, handcrafted, no shortcuts. Every scoop is made fresh each morning because you deserve the real thing every time.', emoji: '🫶', color: '#BF8FFF' },
+              { num: '04', title: 'Flavours of Nepal', desc: 'Cardamom, saffron, tulsi, and local seasonal fruits. We take Nepali ingredients and turn them into world-class ice cream.', emoji: '🌿', color: '#C9973A' },
             ].map((card, i) => (
               <ExperienceCard key={i} card={card} index={i} />
             ))}
@@ -576,23 +529,17 @@ const IceCream = () => {
 
       {/* ===== POLAROID GALLERY ===== */}
       <div style={{
-        padding: '8rem 4rem',
-        background: '#FFF8FC',
-        overflow: 'hidden',
+        padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 4vw, 4rem)',
+        background: '#FFF8FC', overflow: 'hidden',
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.7rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#FF85A1',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.8rem',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem',
+              letterSpacing: '0.3em', textTransform: 'uppercase',
+              color: '#FF85A1', marginBottom: '1rem',
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'center', gap: '0.8rem',
             }}>
               <span style={{ width: '2rem', height: '1px', background: '#FF85A1', display: 'inline-block' }} />
               The Vibe
@@ -600,26 +547,27 @@ const IceCream = () => {
             </p>
             <h2 style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              fontSize: 'clamp(2rem, 5vw, 4rem)',
               fontWeight: 900,
-              color: '#2C1A0E',
             }}>
-              See It. <em style={{ color: '#FF85A1', fontStyle: 'italic' }}>Feel It.</em>
+              <span style={{ color: '#FF85A1' }}>See</span>{' '}
+              <span style={{ color: '#2C1A0E' }}>It.</span>{' '}
+              <em style={{ color: '#BF8FFF', fontStyle: 'italic' }}>Feel It.</em>
             </h2>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '2.5rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',
+            gap: '2rem',
             alignItems: 'start',
           }}>
             {[
               { label: 'Colour Plate', bg: 'linear-gradient(135deg, #FFD6E0, #FF9EB5)', rotate: -3, emoji: '🎨', top: 0 },
-              { label: 'Soft Serve', bg: 'linear-gradient(135deg, #FFF0F5, #FFD6E6)', rotate: 2, emoji: '🍦', top: 40 },
+              { label: 'Soft Serve', bg: 'linear-gradient(135deg, #F5F0FF, #D4BAFF)', rotate: 2, emoji: '🍦', top: 20 },
               { label: 'Italian Gelato', bg: 'linear-gradient(135deg, #FFFBEA, #FFE07A)', rotate: -2, emoji: '🇮🇹', top: 0 },
               { label: 'Pop Ice Cream', bg: 'linear-gradient(135deg, #E0FFF4, #7EDBB0)', rotate: 3, emoji: '🍭', top: 20 },
-              { label: 'The Space', bg: 'linear-gradient(135deg, #FFF0F5, #FFB6C8)', rotate: -1, emoji: '✨', top: 60 },
+              { label: 'The Space', bg: 'linear-gradient(135deg, #FFF0F5, #FFB6C8)', rotate: -1, emoji: '✨', top: 0 },
               { label: 'Made Fresh', bg: 'linear-gradient(135deg, #F0F8FF, #C8E6F5)', rotate: 2, emoji: '🫶', top: 10 },
             ].map((photo, i) => (
               <PolaroidCard key={i} photo={photo} index={i} />
@@ -629,8 +577,6 @@ const IceCream = () => {
       </div>
 
       <FeedbackSection theme="light" />
-
-      {/* ===== FOOTER ===== */}
       <Footer theme="light" />
 
     </div>
@@ -651,15 +597,16 @@ const MenuCard = ({ item, index, inView }) => {
       style={{
         background: item.bg,
         borderRadius: '28px',
-        padding: '2.5rem 2rem',
+        padding: '2rem 1.5rem',
         position: 'relative',
         overflow: 'hidden',
         cursor: 'pointer',
         boxShadow: hovered
-          ? '0 30px 60px rgba(255,133,161,0.2)'
+          ? `0 30px 60px ${item.color}30`
           : '0 4px 20px rgba(44,26,14,0.06)',
         transform: hovered ? 'translateY(-10px)' : 'translateY(0)',
         transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        border: `2px solid ${item.color}20`,
       }}
     >
       {hovered && (
@@ -668,82 +615,73 @@ const MenuCard = ({ item, index, inView }) => {
           animate={{ scaleY: 1 }}
           transition={{ duration: 0.4, ease: 'easeIn' }}
           style={{
-            position: 'absolute',
-            top: 0,
-            left: '20%',
-            right: '20%',
-            height: '8px',
-            background: item.color,
-            borderRadius: '0 0 20px 20px',
-            opacity: 0.5,
+            position: 'absolute', top: 0,
+            left: '20%', right: '20%',
+            height: '4px',
+            background: `linear-gradient(90deg, ${item.color}, ${item.color}80)`,
+            borderRadius: '0 0 10px 10px',
             transformOrigin: 'top',
           }}
         />
       )}
 
+      {/* Tag */}
       <div style={{
         display: 'inline-block',
         padding: '0.3rem 0.9rem',
         borderRadius: '100px',
         background: `${item.color}20`,
-        color: item.color,
+        color: item.textColor || item.color,
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: '0.62rem',
-        fontWeight: 500,
-        letterSpacing: '0.15em',
-        textTransform: 'uppercase',
-        marginBottom: '1.5rem',
+        fontSize: '0.62rem', fontWeight: 600,
+        letterSpacing: '0.15em', textTransform: 'uppercase',
+        marginBottom: '1.2rem',
+        border: `1px solid ${item.color}40`,
       }}>
         {item.tag}
       </div>
 
+      {/* Emoji */}
       <div style={{
-        fontSize: '3rem',
-        marginBottom: '1rem',
-        transform: hovered ? 'scale(1.15) rotate(-5deg)' : 'scale(1) rotate(0deg)',
+        fontSize: '2.5rem', marginBottom: '0.8rem',
+        transform: hovered ? 'scale(1.2) rotate(-8deg)' : 'scale(1) rotate(0deg)',
         transition: 'transform 0.3s ease',
         display: 'inline-block',
       }}>
         {item.emoji}
       </div>
 
+      {/* Name — colourful */}
       <h3 style={{
         fontFamily: "'Playfair Display', serif",
-        fontSize: '1.5rem',
+        fontSize: 'clamp(1.2rem, 2vw, 1.5rem)',
         fontWeight: 700,
-        color: '#2C1A0E',
-        marginBottom: '0.75rem',
+        color: item.textColor || item.color,
+        marginBottom: '0.6rem',
         display: 'block',
       }}>
         {item.name}
       </h3>
 
       <p style={{
-        fontFamily: "'Playfair Display', serif",
-        fontStyle: 'italic',
-        fontSize: '0.88rem',
-        lineHeight: 1.75,
-        color: 'rgba(44,26,14,0.55)',
-        marginBottom: '1.5rem',
+        fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+        fontSize: '0.85rem', lineHeight: 1.7,
+        color: 'rgba(44,26,14,0.55)', marginBottom: '1.2rem',
       }}>
         {item.desc}
       </p>
 
       {/* Flavours */}
       <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '0.5rem',
+        display: 'flex', flexWrap: 'wrap', gap: '0.4rem',
         marginBottom: item.price ? '1rem' : '0',
       }}>
         {item.flavours && item.flavours.map((f, j) => (
           <span key={j} style={{
-            padding: '0.25rem 0.75rem',
-            borderRadius: '100px',
+            padding: '0.2rem 0.7rem', borderRadius: '100px',
             border: `1px solid ${item.color}40`,
-            color: item.color,
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.7rem',
+            color: item.textColor || item.color,
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem',
           }}>
             {f}
           </span>
@@ -754,9 +692,8 @@ const MenuCard = ({ item, index, inView }) => {
       {item.price && (
         <p style={{
           fontFamily: "'Playfair Display', serif",
-          fontWeight: 700,
-          fontSize: '1.1rem',
-          color: item.color,
+          fontWeight: 700, fontSize: '1.1rem',
+          color: item.textColor || item.color,
         }}>
           {item.price}
         </p>
@@ -767,8 +704,7 @@ const MenuCard = ({ item, index, inView }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           style={{
-            position: 'absolute',
-            bottom: 0, left: 0, right: 0,
+            position: 'absolute', bottom: 0, left: 0, right: 0,
             height: '60px',
             background: `linear-gradient(to top, ${item.color}15, transparent)`,
             pointerEvents: 'none',
@@ -805,57 +741,47 @@ const ExperienceCard = ({ card, index }) => {
       style={{
         background: 'white',
         borderRadius: '24px',
-        padding: '2.5rem 2rem',
+        padding: '2rem 1.8rem',
         boxShadow: hovered
-          ? '0 20px 50px rgba(255,133,161,0.15)'
+          ? `0 20px 50px ${card.color}25`
           : '0 4px 20px rgba(44,26,14,0.05)',
         transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
         transition: 'all 0.4s ease',
         position: 'relative',
         overflow: 'hidden',
+        border: hovered ? `2px solid ${card.color}30` : '2px solid transparent',
       }}
     >
       <span style={{
         fontFamily: "'Playfair Display', serif",
-        fontSize: '5rem',
-        fontWeight: 900,
-        color: 'rgba(255,133,161,0.08)',
-        lineHeight: 1,
-        display: 'block',
-        marginBottom: '-1rem',
+        fontSize: '4rem', fontWeight: 900,
+        color: `${card.color}15`,
+        lineHeight: 1, display: 'block',
+        marginBottom: '-0.8rem',
       }}>
         {card.num}
       </span>
-
-      <span style={{ fontSize: '2rem', display: 'block', marginBottom: '1rem' }}>
+      <span style={{ fontSize: '2rem', display: 'block', marginBottom: '0.8rem' }}>
         {card.emoji}
       </span>
-
       <h3 style={{
         fontFamily: "'Playfair Display', serif",
-        fontSize: '1.2rem',
-        fontWeight: 700,
-        color: '#2C1A0E',
-        marginBottom: '0.75rem',
+        fontSize: '1.15rem', fontWeight: 700,
+        color: card.color, marginBottom: '0.6rem',
       }}>
         {card.title}
       </h3>
-
       <p style={{
-        fontFamily: "'Playfair Display', serif",
-        fontStyle: 'italic',
-        fontSize: '0.88rem',
-        lineHeight: 1.75,
+        fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+        fontSize: '0.85rem', lineHeight: 1.7,
         color: 'rgba(44,26,14,0.5)',
       }}>
         {card.desc}
       </p>
-
       <div style={{
-        position: 'absolute',
-        left: 0, top: '20%', bottom: '20%',
+        position: 'absolute', left: 0, top: '20%', bottom: '20%',
         width: '3px',
-        background: 'linear-gradient(to bottom, #FF85A1, #FFB6C8)',
+        background: `linear-gradient(to bottom, ${card.color}, ${card.color}50)`,
         borderRadius: '10px',
         opacity: hovered ? 1 : 0,
         transition: 'opacity 0.3s ease',
@@ -882,44 +808,28 @@ const PolaroidCard = ({ photo, index }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60, rotate: photo.rotate }}
-      animate={inView ? {
-        opacity: 1,
-        y: photo.top,
-        rotate: hovered ? 0 : photo.rotate,
-      } : {}}
-      whileHover={{
-        y: photo.top - 20,
-        rotate: 0,
-        scale: 1.05,
-        zIndex: 10,
-      }}
+      initial={{ opacity: 0, y: 40, rotate: photo.rotate }}
+      animate={inView ? { opacity: 1, y: photo.top, rotate: photo.rotate } : {}}
+      whileHover={{ y: photo.top - 15, rotate: 0, scale: 1.05, zIndex: 10 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         background: 'white',
         borderRadius: '4px',
-        padding: '1rem 1rem 3rem 1rem',
-        boxShadow: hovered
-          ? '0 30px 60px rgba(0,0,0,0.2)'
-          : '0 8px 30px rgba(0,0,0,0.1)',
-        cursor: 'pointer',
-        position: 'relative',
+        padding: '0.8rem 0.8rem 2.5rem 0.8rem',
+        boxShadow: hovered ? '0 30px 60px rgba(0,0,0,0.2)' : '0 8px 30px rgba(0,0,0,0.1)',
+        cursor: 'pointer', position: 'relative',
         transition: 'box-shadow 0.3s ease',
       }}
     >
       <div style={{
-        width: '100%',
-        aspectRatio: '1',
-        background: photo.bg,
-        borderRadius: '2px',
-        display: 'flex',
-        alignItems: 'center',
+        width: '100%', aspectRatio: '1',
+        background: photo.bg, borderRadius: '2px',
+        display: 'flex', alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '4rem',
-        marginBottom: '0.8rem',
-        overflow: 'hidden',
+        fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+        marginBottom: '0.6rem', overflow: 'hidden',
       }}>
         <motion.span
           animate={{ scale: hovered ? 1.2 : 1 }}
@@ -928,26 +838,18 @@ const PolaroidCard = ({ photo, index }) => {
           {photo.emoji}
         </motion.span>
       </div>
-
       <p style={{
-        fontFamily: "'Playfair Display', serif",
-        fontStyle: 'italic',
-        fontSize: '0.85rem',
-        color: 'rgba(44,26,14,0.5)',
+        fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
+        fontSize: '0.8rem', color: 'rgba(44,26,14,0.5)',
         textAlign: 'center',
       }}>
         {photo.label}
       </p>
-
       <div style={{
-        position: 'absolute',
-        top: '-8px',
-        left: '50%',
+        position: 'absolute', top: '-8px', left: '50%',
         transform: 'translateX(-50%)',
-        width: '12px',
-        height: '12px',
-        borderRadius: '50%',
-        background: '#FF85A1',
+        width: '10px', height: '10px',
+        borderRadius: '50%', background: '#FF85A1',
         boxShadow: '0 2px 8px rgba(255,133,161,0.5)',
       }} />
     </motion.div>

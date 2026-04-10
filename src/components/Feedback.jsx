@@ -192,7 +192,7 @@ const FeedbackSection = ({ theme = 'light' }) => {
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Priya Sharma"
+                      placeholder="e.g. Pravash gajurel"
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       style={{
