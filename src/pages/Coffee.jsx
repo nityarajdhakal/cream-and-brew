@@ -4,8 +4,10 @@ import FeedbackSection from '../components/Feedback'
 import Footer from '../components/Footer'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 const Coffee = () => {
+  const navigate = useNavigate()
   const mountainRef = useRef(null)
   const cupRef = useRef(null)
   const [inViewMenu, setInViewMenu] = useState(false)
@@ -363,6 +365,10 @@ const Coffee = () => {
         {/* Book a Table */}
         <motion.a
           href="/reservation"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate('/reservation')
+          }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
