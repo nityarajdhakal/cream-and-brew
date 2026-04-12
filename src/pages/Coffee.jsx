@@ -68,7 +68,7 @@ const Coffee = () => {
       light: false,
     },
     {
-      name: 'Exotic coffee',
+      name: 'Exotic Teas',
       tag: 'Teas',
       desc: 'Masala chai, tulsi green, and Ilam first flush — Nepal\'s finest leaves steeped to perfection in clay pots.',
       flavours: ['Masala Chai', 'Tulsi Green', 'Ilam First Flush'],
@@ -619,19 +619,19 @@ const Coffee = () => {
                 num: '02',
                 title: 'The Art of Brewing',
                 desc: 'Every brewing method is chosen to honour the bean — pour over, espresso, cold steep, or clay pot. Never rushed.',
-                emoji: '🎯',
+                emoji: '♨️ ',
               },
               {
                 num: '03',
                 title: 'Latte Art Masters',
                 desc: 'Our baristas train for months to perfect the pour. Every cup comes with art on top and heart behind it.',
-                emoji: '🎨',
+                emoji: '☕ ',
               },
               {
                 num: '04',
                 title: 'The Right Atmosphere',
                 desc: 'Dark, warm, and intimate. The kind of place where conversations last longer and time slows down.',
-                emoji: '🕯️',
+                emoji: 'feel🏮',
               },
             ].map((card, i) => (
               <CoffeeExperienceCard key={i} card={card} index={i} />
@@ -685,7 +685,7 @@ const Coffee = () => {
               { label: 'Latte Art', bg: 'linear-gradient(135deg, #5C3317, #C9973A)', rotate: 2, emoji: '☕', top: 40, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&q=80&auto=format&fit=crop' },
               { label: 'The Lounge', bg: 'linear-gradient(135deg, #1A0F07, #3D2010)', rotate: -2, emoji: '🕯️', top: 0, image: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80&auto=format&fit=crop' },
               { label: 'Cold Brew', bg: 'linear-gradient(135deg, #0A1520, #1E3A5A)', rotate: 3, emoji: '🧊', top: 20, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80&auto=format&fit=crop' },
-              { label: 'Exotic Coffee', bg: 'linear-gradient(135deg, #0A1F15, #1A4030)', rotate: -1, emoji: '🍵', top: 60, image: 'https://plus.unsplash.com/premium_photo-1726072371400-996a95bd8e08?q=80&w=600&auto=format&fit=crop' },
+              { label: 'Exotic Teas', bg: 'linear-gradient(135deg, #0A1F15, #1A4030)', rotate: -1, emoji: '🍵', top: 60, image: 'https://plus.unsplash.com/premium_photo-1726072371400-996a95bd8e08?q=80&w=600&auto=format&fit=crop' },
               { label: 'The Ritual', bg: 'linear-gradient(135deg, #2C1A0E, #6B3A20)', rotate: 2, emoji: '🎯', top: 10, image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80&auto=format&fit=crop' },
             ].map((photo, i) => (
               <CoffeePolaroid key={i} photo={photo} index={i} />
