@@ -609,10 +609,10 @@ const IceCream = () => {
             {[
               { label: 'Colour Plate', bg: 'linear-gradient(135deg, #FFD6E0, #FF9EB5)', rotate: -3, emoji: '🎨', top: 0, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80&auto=format&fit=crop' },
               { label: 'Soft Serve', bg: 'linear-gradient(135deg, #F5F0FF, #D4BAFF)', rotate: 2, emoji: '🍦', top: 20, image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80&auto=format&fit=crop' },
-              { label: 'Italian Gelato', bg: 'linear-gradient(135deg, #FFFBEA, #FFE07A)', rotate: -2, emoji: '🇮🇹', top: 0, image: 'https://unsplash.com/photos/a-hand-holding-an-ice-cream-cone-in-front-of-a-cathedral-1OoMf6MuF9M' },
-              { label: 'Pop Ice Cream', bg: 'linear-gradient(135deg, #E0FFF4, #7EDBB0)', rotate: 3, emoji: '🍭', top: 20, image: 'https://unsplash.com/photos/minimal-summer-concept-flat-lay-NQXloowRK2o' },
+              { label: 'Italian Gelato', bg: 'linear-gradient(135deg, #FFFBEA, #FFE07A)', rotate: -2, emoji: '🇮🇹', top: 0, image: 'https://images.unsplash.com/photo-1680438004156-51a1839bd14c?q=80&w=600&auto=format&fit=crop' },
+              { label: 'Pop Ice Cream', bg: 'linear-gradient(135deg, #E0FFF4, #7EDBB0)', rotate: 3, emoji: '🍭', top: 20, image: 'https://plus.unsplash.com/premium_photo-1740861923187-904a4c6522c3?q=80&w=600&auto=format&fit=crop' },
               { label: 'The Space', bg: 'linear-gradient(135deg, #FFF0F5, #FFB6C8)', rotate: -1, emoji: '✨', top: 0, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80&auto=format&fit=crop' },
-              { label: 'Made Fresh', bg: 'linear-gradient(135deg, #F0F8FF, #C8E6F5)', rotate: 2, emoji: '🫶', top: 10, image: 'https://unsplash.com/photos/white-and-orange-cups-in-bowl-2v19oW5o1f0' },
+              { label: 'Made Fresh', bg: 'linear-gradient(135deg, #F0F8FF, #C8E6F5)', rotate: 2, emoji: '🫶', top: 10, image: 'https://images.unsplash.com/photo-1561876455-5dfe9d2f2f0a?q=80&w=600&auto=format&fit=crop' },
             ].map((photo, i) => (
               <PolaroidCard key={i} photo={photo} index={i} />
             ))}
