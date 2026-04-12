@@ -631,7 +631,7 @@ const Coffee = () => {
                 num: '04',
                 title: 'The Right Atmosphere',
                 desc: 'Dark, warm, and intimate. The kind of place where conversations last longer and time slows down.',
-                emoji: 'feel🏮',
+                emoji: '🏮',
               },
             ].map((card, i) => (
               <CoffeeExperienceCard key={i} card={card} index={i} />
