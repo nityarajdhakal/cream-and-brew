@@ -4,10 +4,13 @@ import FeedbackSection from '../components/Feedback'
 import Footer from '../components/Footer'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useMatchMedia } from '../hooks/useMatchMedia'
+
+const MotionLink = motion(Link)
 
 const Coffee = () => {
-  const navigate = useNavigate()
+  const isNarrow = useMatchMedia('(max-width: 768px)')
   const mountainRef = useRef(null)
   const cupRef = useRef(null)
   const [inViewMenu, setInViewMenu] = useState(false)
@@ -17,6 +20,7 @@ const Coffee = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
+      if (window.innerWidth <= 768) return
       const x = (e.clientX / window.innerWidth - 0.5)
       const y = (e.clientY / window.innerHeight - 0.5)
       if (mountainRef.current) {
@@ -97,7 +101,8 @@ const Coffee = () => {
 
   return (
     <div style={{
-      width: '100vw',
+      width: '100%',
+      maxWidth: '100%',
       minHeight: '100vh',
       background: '#0a0501',
       overflowX: 'hidden',
@@ -107,11 +112,12 @@ const Coffee = () => {
       <div style={{
         position: 'relative',
         width: '100%',
-        height: '100vh',
+        minHeight: isNarrow ? 'min(100vh, 900px)' : '100vh',
         overflow: 'hidden',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: isNarrow ? 'flex-start' : 'center',
+        justifyContent: isNarrow ? 'flex-start' : 'center',
+        paddingBottom: isNarrow ? 'clamp(7rem, 20vw, 11rem)' : 0,
       }}>
 
         {/* Dark sky background */}
@@ -180,8 +186,8 @@ const Coffee = () => {
           ref={cupRef}
           style={{
             position: 'absolute',
-            right: '8%',
-            bottom: '8%',
+            right: isNarrow ? '50%' : '8%',
+            bottom: isNarrow ? '4%' : '8%',
             zIndex: 4,
             transition: 'transform 0.15s ease-out',
           }}
@@ -189,11 +195,22 @@ const Coffee = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.5, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
         >
+          <div style={{ transform: isNarrow ? 'translateX(50%)' : undefined }}>
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              transform: isNarrow ? 'scale(0.78)' : undefined,
+              transformOrigin: 'bottom center',
+            }}
           >
-            <svg width="300" height="320" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="300"
+              height="320"
+              viewBox="0 0 300 320"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ maxWidth: isNarrow ? 'min(260px, 72vw)' : undefined }}
+            >
               <defs>
                 <linearGradient id="cupBody" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor="#5C3317" />
@@ -249,27 +266,32 @@ const Coffee = () => {
               ))}
             </svg>
           </motion.div>
+          </div>
         </motion.div>
 
         {/* Hero Text */}
         <div style={{
           position: 'relative',
           zIndex: 5,
-          maxWidth: '600px',
-          padding: '0 3rem',
-          marginRight: '20%',
+          maxWidth: isNarrow ? '100%' : '600px',
+          width: '100%',
+          boxSizing: 'border-box',
+          padding: isNarrow ? '5.25rem 1.25rem 0' : '0 3rem',
+          marginRight: isNarrow ? 0 : '20%',
+          textAlign: isNarrow ? 'center' : 'left',
         }}>
           <motion.p
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '0.72rem',
-              letterSpacing: '0.3em',
+              letterSpacing: isNarrow ? '0.2em' : '0.3em',
               textTransform: 'uppercase',
               color: '#C9973A',
               marginBottom: '1rem',
               display: 'flex',
               alignItems: 'center',
               gap: '0.8rem',
+              justifyContent: isNarrow ? 'center' : 'flex-start',
             }}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -282,7 +304,7 @@ const Coffee = () => {
           <motion.h1
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+              fontSize: 'clamp(2.2rem, 9vw, 5.5rem)',
               fontWeight: 900,
               color: 'white',
               lineHeight: 1.05,
@@ -300,11 +322,13 @@ const Coffee = () => {
             style={{
               fontFamily: "'Playfair Display', serif",
               fontStyle: 'italic',
-              fontSize: '1rem',
+              fontSize: 'clamp(0.95rem, 3.5vw, 1rem)',
               lineHeight: 1.8,
               color: 'rgba(255,255,255,0.45)',
               marginBottom: '2.5rem',
               maxWidth: '420px',
+              marginLeft: isNarrow ? 'auto' : undefined,
+              marginRight: isNarrow ? 'auto' : undefined,
             }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -314,7 +338,12 @@ const Coffee = () => {
           </motion.p>
 
           <motion.div
-            style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              flexWrap: 'wrap',
+              justifyContent: isNarrow ? 'center' : 'flex-start',
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
@@ -363,12 +392,8 @@ const Coffee = () => {
         </div>
 
         {/* Book a Table */}
-        <motion.a
-          href="/reservation"
-          onClick={(e) => {
-            e.preventDefault()
-            navigate('/reservation')
-          }}
+        <MotionLink
+          to="/reservation"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
@@ -376,17 +401,17 @@ const Coffee = () => {
           whileTap={{ scale: 0.97 }}
           style={{
             position: 'absolute',
-            top: '1.5rem',
-            right: '2rem',
+            top: isNarrow ? '1rem' : '1.5rem',
+            right: isNarrow ? '0.75rem' : '2rem',
             zIndex: 10,
             background: 'rgba(255,255,255,0.08)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             border: '1px solid rgba(201,151,58,0.4)',
             borderRadius: '100px',
-            padding: '0.65rem 1.4rem',
+            padding: isNarrow ? '0.55rem 1.1rem' : '0.65rem 1.4rem',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.78rem',
+            fontSize: isNarrow ? '0.72rem' : '0.78rem',
             fontWeight: 500,
             color: 'white',
             textDecoration: 'none',
@@ -403,7 +428,7 @@ const Coffee = () => {
             display: 'inline-block',
           }} />
           Book a Table
-        </motion.a>
+        </MotionLink>
 
         {/* Scroll indicator */}
         <motion.div

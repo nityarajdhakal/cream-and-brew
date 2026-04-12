@@ -1,23 +1,30 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { useMatchMedia } from '../hooks/useMatchMedia'
 
 const Home = () => {
   const navigate = useNavigate()
+  const isNarrow = useMatchMedia('(max-width: 768px)')
 
   return (
     <div style={{
       position: 'relative',
-      width: '100vw',
-      height: '100vh',
-      overflow: 'hidden',
+      width: '100%',
+      maxWidth: '100%',
+      minHeight: '100vh',
+      height: isNarrow ? 'auto' : '100vh',
+      overflow: isNarrow ? 'auto' : 'hidden',
+      overflowX: 'hidden',
       display: 'flex',
+      flexDirection: isNarrow ? 'column' : 'row',
     }}>
 
       {/* ===== LEFT — ICE CREAM WORLD ===== */}
       <div style={{
         position: 'relative',
         flex: 1,
-        height: '100%',
+        minHeight: isNarrow ? 'min(52vh, 420px)' : '100%',
+        height: isNarrow ? 'min(52vh, 420px)' : '100%',
         overflow: 'hidden',
         background: 'linear-gradient(160deg, #FFF0F5 0%, #FFE4EE 50%, #FFD6E6 100%)',
       }}>
@@ -100,15 +107,21 @@ const Home = () => {
 
       {/* ===== DIVIDER ===== */}
       <div style={{
-        width: '1px', flexShrink: 0, zIndex: 10,
-        background: 'linear-gradient(to bottom, transparent, rgba(201,151,58,0.5), transparent)',
+        width: isNarrow ? '100%' : '1px',
+        height: isNarrow ? '1px' : 'auto',
+        flexShrink: 0,
+        zIndex: 10,
+        background: isNarrow
+          ? 'linear-gradient(to right, transparent, rgba(201,151,58,0.45), transparent)'
+          : 'linear-gradient(to bottom, transparent, rgba(201,151,58,0.5), transparent)',
       }} />
 
       {/* ===== RIGHT — COFFEE WORLD ===== */}
       <div style={{
         position: 'relative',
         flex: 1,
-        height: '100%',
+        minHeight: isNarrow ? 'min(52vh, 420px)' : '100%',
+        height: isNarrow ? 'min(52vh, 420px)' : '100%',
         overflow: 'hidden',
         background: 'linear-gradient(160deg, #4A2810 0%, #2C1A0E 50%, #1A0F07 100%)',
       }}>
@@ -192,11 +205,14 @@ const Home = () => {
       {/* ===== CENTER LOGO ===== */}
       <div style={{
         position: 'absolute',
-        top: '50%', left: '50%',
+        top: '50%',
+        left: '50%',
         transform: 'translate(-50%, -50%)',
-        zIndex: 20, textAlign: 'center',
+        zIndex: 20,
+        textAlign: 'center',
         pointerEvents: 'none',
         width: 'max-content',
+        maxWidth: isNarrow ? 'min(92vw, 340px)' : undefined,
       }}>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -214,9 +230,9 @@ const Home = () => {
         >
           <h1 style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 'clamp(1.4rem, 3vw, 2.8rem)',
+            fontSize: 'clamp(1.25rem, 4.5vw, 2.8rem)',
             fontWeight: 900, color: 'white',
-            whiteSpace: 'nowrap',
+            whiteSpace: isNarrow ? 'normal' : 'nowrap',
             textShadow: '0 2px 20px rgba(0,0,0,0.4)',
             lineHeight: 1.2,
           }}>

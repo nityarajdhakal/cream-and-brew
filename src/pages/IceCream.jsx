@@ -4,10 +4,13 @@ import FeedbackSection from '../components/Feedback'
 import Footer from '../components/Footer'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useMatchMedia } from '../hooks/useMatchMedia'
+
+const MotionLink = motion(Link)
 
 const IceCream = () => {
-  const navigate = useNavigate()
+  const isNarrow = useMatchMedia('(max-width: 768px)')
   const mountainRef = useRef(null)
   const softserveRef = useRef(null)
   const [inViewMenu, setInViewMenu] = useState(false)
@@ -17,6 +20,7 @@ const IceCream = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
+      if (window.innerWidth <= 768) return
       const x = (e.clientX / window.innerWidth - 0.5)
       const y = (e.clientY / window.innerHeight - 0.5)
       if (mountainRef.current) {
@@ -97,7 +101,8 @@ const IceCream = () => {
 
   return (
     <div style={{
-      width: '100vw',
+      width: '100%',
+      maxWidth: '100%',
       minHeight: '100vh',
       background: '#FFF8FC',
       overflowX: 'hidden',
@@ -107,11 +112,12 @@ const IceCream = () => {
       <div style={{
         position: 'relative',
         width: '100%',
-        minHeight: '100vh',
+        minHeight: isNarrow ? 'min(100vh, 920px)' : '100vh',
         overflow: 'hidden',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: isNarrow ? 'flex-start' : 'center',
+        justifyContent: isNarrow ? 'flex-start' : 'center',
+        paddingBottom: isNarrow ? 'clamp(8rem, 22vw, 12rem)' : 0,
       }}>
 
         {/* Colourful background */}
@@ -167,20 +173,28 @@ const IceCream = () => {
         {/* Giant Soft Serve */}
         <motion.div ref={softserveRef}
           style={{
-            position: 'absolute', right: '5%', bottom: '0',
-            zIndex: 4, transition: 'transform 0.15s ease-out',
+            position: 'absolute',
+            right: isNarrow ? '50%' : '5%',
+            bottom: isNarrow ? '2%' : '0',
+            zIndex: 4,
+            transition: 'transform 0.15s ease-out',
           }}
           initial={{ opacity: 0, y: 80, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.5, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
         >
+          <div style={{ transform: isNarrow ? 'translateX(50%)' : undefined }}>
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              transform: isNarrow ? 'scale(0.72)' : undefined,
+              transformOrigin: 'bottom center',
+            }}
           >
             <svg width="240" height="380" viewBox="0 0 280 420"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ maxWidth: '40vw' }}
+              style={{ maxWidth: isNarrow ? 'min(220px, 58vw)' : '40vw' }}
             >
               <defs>
                 <radialGradient id="swirl1" cx="40%" cy="30%" r="65%">
@@ -219,22 +233,30 @@ const IceCream = () => {
               <ellipse cx="122" cy="168" rx="12" ry="6" fill="rgba(255,255,255,0.35)" />
             </svg>
           </motion.div>
+          </div>
         </motion.div>
 
         {/* Hero Text */}
         <div style={{
           position: 'relative', zIndex: 5,
-          maxWidth: '580px',
-          padding: '6rem 2rem 2rem 2rem',
-          marginRight: '15%',
+          maxWidth: isNarrow ? '100%' : '580px',
+          width: '100%',
+          boxSizing: 'border-box',
+          padding: isNarrow
+            ? '5.25rem 1.25rem 1rem 1.25rem'
+            : '6rem 2rem 2rem 2rem',
+          marginRight: isNarrow ? 0 : '15%',
+          marginLeft: isNarrow ? 0 : undefined,
+          textAlign: isNarrow ? 'center' : 'left',
         }}>
           <motion.p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.72rem', letterSpacing: '0.3em',
+              fontSize: '0.72rem', letterSpacing: isNarrow ? '0.2em' : '0.3em',
               textTransform: 'uppercase', color: '#FF85A1',
               marginBottom: '1rem', display: 'flex',
               alignItems: 'center', gap: '0.8rem',
+              justifyContent: isNarrow ? 'center' : 'flex-start',
             }}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -249,7 +271,7 @@ const IceCream = () => {
               fontFamily: "'Playfair Display', serif",
               fontWeight: 900, lineHeight: 1.05,
               marginBottom: '1.5rem',
-              fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',
+              fontSize: 'clamp(2.1rem, 9vw, 5.5rem)',
             }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -265,9 +287,12 @@ const IceCream = () => {
           <motion.p
             style={{
               fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
-              fontSize: '1rem', lineHeight: 1.8,
+              fontSize: 'clamp(0.95rem, 3.5vw, 1rem)', lineHeight: 1.8,
               color: 'rgba(44,26,14,0.55)',
-              marginBottom: '1.5rem', maxWidth: '420px',
+              marginBottom: '1.5rem',
+              maxWidth: '420px',
+              marginLeft: isNarrow ? 'auto' : undefined,
+              marginRight: isNarrow ? 'auto' : undefined,
             }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -278,7 +303,11 @@ const IceCream = () => {
 
           {/* Colourful flavour tags */}
           <motion.div
-            style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem' }}
+            style={{
+              display: 'flex', flexWrap: 'wrap', gap: '0.5rem',
+              marginBottom: '2rem',
+              justifyContent: isNarrow ? 'center' : 'flex-start',
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}
@@ -306,7 +335,10 @@ const IceCream = () => {
           </motion.div>
 
           <motion.div
-            style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
+            style={{
+              display: 'flex', gap: '1rem', flexWrap: 'wrap',
+              justifyContent: isNarrow ? 'center' : 'flex-start',
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
@@ -346,29 +378,34 @@ const IceCream = () => {
         </div>
 
         {/* Book a Table */}
-        <motion.a
-          href="/reservation"
-          onClick={(e) => {
-            e.preventDefault()
-            navigate('/reservation')
-          }}
+        <MotionLink
+          to="/reservation"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.97 }}
           style={{
-            position: 'absolute', top: '1.5rem', right: '1.5rem',
+            position: 'absolute',
+            top: isNarrow ? '1rem' : '1.5rem',
+            right: isNarrow ? '0.75rem' : '1.5rem',
+            left: isNarrow ? 'auto' : undefined,
             zIndex: 10,
             background: 'rgba(255,255,255,0.7)',
             backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
             border: '1px solid rgba(255,133,161,0.4)',
-            borderRadius: '100px', padding: '0.65rem 1.4rem',
+            borderRadius: '100px',
+            padding: isNarrow ? '0.55rem 1.1rem' : '0.65rem 1.4rem',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.78rem', fontWeight: 500,
-            color: '#FF85A1', textDecoration: 'none',
+            fontSize: isNarrow ? '0.72rem' : '0.78rem',
+            fontWeight: 500,
+            color: '#FF85A1',
+            textDecoration: 'none',
             letterSpacing: '0.05em',
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
           }}
         >
           <span style={{
@@ -376,7 +413,7 @@ const IceCream = () => {
             background: '#FF85A1', display: 'inline-block',
           }} />
           Book a Table
-        </motion.a>
+        </MotionLink>
 
         {/* Scroll indicator */}
         <motion.div
@@ -570,12 +607,12 @@ const IceCream = () => {
             alignItems: 'start',
           }}>
             {[
-              { label: 'Colour Plate', bg: 'linear-gradient(135deg, #FFD6E0, #FF9EB5)', rotate: -3, emoji: '🎨', top: 0 },
-              { label: 'Soft Serve', bg: 'linear-gradient(135deg, #F5F0FF, #D4BAFF)', rotate: 2, emoji: '🍦', top: 20 },
-              { label: 'Italian Gelato', bg: 'linear-gradient(135deg, #FFFBEA, #FFE07A)', rotate: -2, emoji: '🇮🇹', top: 0 },
-              { label: 'Pop Ice Cream', bg: 'linear-gradient(135deg, #E0FFF4, #7EDBB0)', rotate: 3, emoji: '🍭', top: 20 },
-              { label: 'The Space', bg: 'linear-gradient(135deg, #FFF0F5, #FFB6C8)', rotate: -1, emoji: '✨', top: 0 },
-              { label: 'Made Fresh', bg: 'linear-gradient(135deg, #F0F8FF, #C8E6F5)', rotate: 2, emoji: '🫶', top: 10 },
+              { label: 'Colour Plate', bg: 'linear-gradient(135deg, #FFD6E0, #FF9EB5)', rotate: -3, emoji: '🎨', top: 0, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Soft Serve', bg: 'linear-gradient(135deg, #F5F0FF, #D4BAFF)', rotate: 2, emoji: '🍦', top: 20, image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Italian Gelato', bg: 'linear-gradient(135deg, #FFFBEA, #FFE07A)', rotate: -2, emoji: '🇮🇹', top: 0, image: 'https://images.unsplash.com/photo-1566454825481-f37c19531dc7?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Pop Ice Cream', bg: 'linear-gradient(135deg, #E0FFF4, #7EDBB0)', rotate: 3, emoji: '🍭', top: 20, image: 'https://images.unsplash.com/photo-1560008581-09826d1a69b8?w=600&q=80&auto=format&fit=crop' },
+              { label: 'The Space', bg: 'linear-gradient(135deg, #FFF0F5, #FFB6C8)', rotate: -1, emoji: '✨', top: 0, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Made Fresh', bg: 'linear-gradient(135deg, #F0F8FF, #C8E6F5)', rotate: 2, emoji: '🫶', top: 10, image: 'https://images.unsplash.com/photo-1557142046-c704927b238b?w=600&q=80&auto=format&fit=crop' },
             ].map((photo, i) => (
               <PolaroidCard key={i} photo={photo} index={i} />
             ))}
@@ -837,13 +874,54 @@ const PolaroidCard = ({ photo, index }) => {
         justifyContent: 'center',
         fontSize: 'clamp(2.5rem, 5vw, 4rem)',
         marginBottom: '0.6rem', overflow: 'hidden',
+        position: 'relative',
       }}>
-        <motion.span
-          animate={{ scale: hovered ? 1.2 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {photo.emoji}
-        </motion.span>
+        {photo.image ? (
+          <>
+            <img
+              src={photo.image}
+              alt={photo.label}
+              loading="lazy"
+              decoding="async"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '2px',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '2px',
+                background: photo.bg,
+                opacity: 0.38,
+                mixBlendMode: 'multiply',
+              }}
+            />
+            <motion.span
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.2))',
+              }}
+              animate={{ scale: hovered ? 1.15 : 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {photo.emoji}
+            </motion.span>
+          </>
+        ) : (
+          <motion.span
+            animate={{ scale: hovered ? 1.2 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {photo.emoji}
+          </motion.span>
+        )}
       </div>
       <p style={{
         fontFamily: "'Playfair Display', serif", fontStyle: 'italic',
