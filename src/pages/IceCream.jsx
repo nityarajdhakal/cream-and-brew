@@ -602,7 +602,7 @@ const IceCream = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',
+            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '2rem',
             alignItems: 'start',
           }}>
