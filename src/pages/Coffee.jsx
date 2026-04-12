@@ -68,7 +68,7 @@ const Coffee = () => {
       light: false,
     },
     {
-      name: 'Exotic Teas',
+      name: 'Exotic coffee',
       tag: 'Teas',
       desc: 'Masala chai, tulsi green, and Ilam first flush — Nepal\'s finest leaves steeped to perfection in clay pots.',
       flavours: ['Masala Chai', 'Tulsi Green', 'Ilam First Flush'],
@@ -681,12 +681,12 @@ const Coffee = () => {
             alignItems: 'start',
           }}>
             {[
-              { label: 'Himalayan Brew', bg: 'linear-gradient(135deg, #3D2010, #7B4A25)', rotate: -3, emoji: '⛰️', top: 0 },
-              { label: 'Latte Art', bg: 'linear-gradient(135deg, #5C3317, #C9973A)', rotate: 2, emoji: '☕', top: 40 },
-              { label: 'The Lounge', bg: 'linear-gradient(135deg, #1A0F07, #3D2010)', rotate: -2, emoji: '🕯️', top: 0 },
-              { label: 'Cold Brew', bg: 'linear-gradient(135deg, #0A1520, #1E3A5A)', rotate: 3, emoji: '🧊', top: 20 },
-              { label: 'Exotic Teas', bg: 'linear-gradient(135deg, #0A1F15, #1A4030)', rotate: -1, emoji: '🍵', top: 60 },
-              { label: 'The Ritual', bg: 'linear-gradient(135deg, #2C1A0E, #6B3A20)', rotate: 2, emoji: '🎯', top: 10 },
+              { label: 'Himalayan Brew', bg: 'linear-gradient(135deg, #3D2010, #7B4A25)', rotate: -3, emoji: '⛰️', top: 0, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Latte Art', bg: 'linear-gradient(135deg, #5C3317, #C9973A)', rotate: 2, emoji: '☕', top: 40, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&q=80&auto=format&fit=crop' },
+              { label: 'The Lounge', bg: 'linear-gradient(135deg, #1A0F07, #3D2010)', rotate: -2, emoji: '🕯️', top: 0, image: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Cold Brew', bg: 'linear-gradient(135deg, #0A1520, #1E3A5A)', rotate: 3, emoji: '🧊', top: 20, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80&auto=format&fit=crop' },
+              { label: 'Exotic Coffee', bg: 'linear-gradient(135deg, #0A1F15, #1A4030)', rotate: -1, emoji: '🍵', top: 60, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80&auto=format&fit=crop' },
+              { label: 'The Ritual', bg: 'linear-gradient(135deg, #2C1A0E, #6B3A20)', rotate: 2, emoji: '🎯', top: 10, image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80&auto=format&fit=crop' },
             ].map((photo, i) => (
               <CoffeePolaroid key={i} photo={photo} index={i} />
             ))}
@@ -989,13 +989,30 @@ const CoffeePolaroid = ({ photo, index }) => {
         fontSize: '4rem',
         marginBottom: '0.8rem',
         overflow: 'hidden',
+        position: 'relative',
       }}>
-        <motion.span
-          animate={{ scale: hovered ? 1.2 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {photo.emoji}
-        </motion.span>
+        {photo.image ? (
+          <motion.img
+            src={photo.image}
+            alt={photo.label}
+            animate={{ scale: hovered ? 1.08 : 1 }}
+            transition={{ duration: 0.4 }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              position: 'absolute',
+              inset: 0,
+            }}
+          />
+        ) : (
+          <motion.span
+            animate={{ scale: hovered ? 1.2 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {photo.emoji}
+          </motion.span>
+        )}
       </div>
       <p style={{
         fontFamily: "'Playfair Display', serif",
