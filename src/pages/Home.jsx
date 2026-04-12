@@ -248,20 +248,6 @@ const Home = () => {
             Kathmandu · Nepal
           </p>
         </motion.div>
-
-        <motion.p
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.65rem', letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.5)',
-            marginTop: '1rem', whiteSpace: 'nowrap',
-          }}
-        >
-          ← Click to explore →
-        </motion.p>
       </div>
 
     </div>
